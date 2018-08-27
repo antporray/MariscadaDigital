@@ -125,7 +125,7 @@ DROP TABLE IF EXISTS `song`;
 CREATE TABLE `song` (
   `idSong` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `long` varchar(45) NOT NULL,
+  `duration` varchar(45) NOT NULL,
   `idBand` int(11) DEFAULT NULL,
   `idStreaming` int(11) DEFAULT NULL,
   `idGenre` int(11) DEFAULT NULL,
@@ -158,12 +158,11 @@ DROP TABLE IF EXISTS `streaming`;
 CREATE TABLE `streaming` (
   `idStreaming` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) NOT NULL,
-  `long` varchar(45) NOT NULL,
+  `duration` varchar(45) NOT NULL,
   `commitDate` date NOT NULL,
   `views` int(11) NOT NULL,
   `video` mediumblob NOT NULL,
   `idSong` int(11) DEFAULT NULL,
-  `streamingcol` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`idStreaming`),
   KEY `idSong_idx` (`idSong`),
   CONSTRAINT `idSong` FOREIGN KEY (`idSong`) REFERENCES `song` (`idSong`) ON DELETE NO ACTION ON UPDATE NO ACTION
@@ -207,7 +206,7 @@ CREATE TABLE `user` (
   CONSTRAINT `Password` FOREIGN KEY (`idPassword`) REFERENCES `password` (`idPassword`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `Streaming` FOREIGN KEY (`idStreaming`) REFERENCES `streaming` (`idStreaming`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `idFriend` FOREIGN KEY (`idFriend`) REFERENCES `friend` (`idFriend`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -228,4 +227,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-17 12:27:21
+-- Dump completed on 2018-08-27 12:20:25
