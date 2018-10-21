@@ -193,7 +193,7 @@ CREATE TABLE `user` (
   `birthday` date DEFAULT NULL,
   `registerDate` date NOT NULL,
   `email` varchar(45) NOT NULL,
-  `category` varchar(45) DEFAULT NULL,
+  `category` enum('Artista solitario','Banda','Discográfica','Festival','Sala de concierto','Teatro','Espectador','Tienda de música') NOT NULL DEFAULT 'Espectador',
   `idPassword` int(11) DEFAULT NULL,
   `idFriend` int(11) DEFAULT NULL,
   `idStreaming` int(11) DEFAULT NULL,
@@ -375,6 +375,51 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_User` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_User`(
+	IN w_idUser int(11),
+    IN w_name varchar(45),
+    IN w_surname varchar(45),
+    IN w_birthday date,
+    IN w_registerDate date,
+    IN w_email varchar(45),
+    IN w_category enum('Artista solitario',
+    'Banda','Discográfica','Festival','Sala de concierto','Teatro',
+    'Espectador','Tienda de música'),
+    IN w_idPassword int(11),
+    IN w_idFriend int(11),
+    IN w_idStreaming int(11)
+    
+)
+BEGIN
+
+	UPDATE user 
+    SET	name = w_name,
+		surname = w_surname,
+		birthday = w_birthday,
+		registerDate = w_registerDate,
+		email = w_email,
+		category = w_category,
+		idPassword =w_idPassword,
+		idFriend = w_idFriend,
+		idStreaming = w_idStreaming
+	WHERE idUser = w_idUser;
+    
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -385,4 +430,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-09-12 17:30:13
+-- Dump completed on 2018-10-21 19:02:53
