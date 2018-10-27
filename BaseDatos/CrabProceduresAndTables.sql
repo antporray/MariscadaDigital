@@ -197,6 +197,7 @@ CREATE TABLE `user` (
   `idPassword` int(11) DEFAULT NULL,
   `idFriend` int(11) DEFAULT NULL,
   `idStreaming` int(11) DEFAULT NULL,
+  `ProfilePicture` tinyblob,
   PRIMARY KEY (`idUser`),
   UNIQUE KEY `nickname_UNIQUE` (`nickname`),
   UNIQUE KEY `email_UNIQUE` (`email`),
@@ -364,11 +365,160 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `insertar_User`(
   IN w_category varchar (45),
   IN w_idPassword int(11),
   IN w_idFriend int(11),
-  IN w_Streaming int(11)
+  IN w_Streaming int(11),
+  IN w_ProfilePicture tinyblob
 )
 BEGIN
-	insert into user(nickname, name, surname, birthday, registerDate, email, category, idPassword, idFriend, idStreaming) 
-    values(w_nickname,w_name, w_surname, w_birthday, w_registerDate, w_email, w_category, w_idPassword, w_idFriend, w_idStreaming);
+	insert into user(nickname, name, surname, birthday, registerDate, email, category, idPassword, idFriend, idStreaming, ProfilePicture) 
+    values(w_nickname,w_name, w_surname, w_birthday, w_registerDate, w_email, w_category, w_idPassword, w_idFriend, w_idStreaming, w_ProfilePicture);
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_Band` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_Band`(
+IN w_idBand int(11),
+IN w_name varchar(45),
+IN w_yearOfForm date,
+IN w_town varchar(45),
+IN w_idStreaming int(11),
+IN w_idGenre int(11)
+)
+BEGIN
+update band
+SET name=w_name,
+	yearOfForm=w_yearOfForm,
+    town=w_town,
+    idStreaming=w_idStreaming,
+    idGenre=w_idGenre
+WHERE idBand=w_idBand;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_friend` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_friend`(
+IN w_idFriend int(11),
+IN w_idUser int(11)
+
+)
+BEGIN
+UPDATE friend
+SET	idUser=w_idUser
+WHERE idFriend=w_idFriend;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_genre` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_genre`(
+IN w_idGenre int(11),
+IN w_type varchar(45)
+)
+BEGIN
+UPDATE genre
+SET type=w_type
+WHERE idGenre=w_idGenre;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_song` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_song`(
+IN w_idSong int(11),
+IN w_name varchar(45),
+IN w_duration varchar(45),
+IN w_idBand int(11),
+IN w_idStreaming int (11),
+IN w_idGenre int(11)
+
+)
+BEGIN
+UPDATE song
+SET name=w_name,
+	duration=w_duration,
+    idBand=w_idBand,
+    idStreaming=w_idStreaming,
+    idGenre=w_idGenre
+WHERE idSong=w_idSong;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_Streaming` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8 */ ;
+/*!50003 SET character_set_results = utf8 */ ;
+/*!50003 SET collation_connection  = utf8_general_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = 'NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
+DELIMITER ;;
+CREATE DEFINER=`root`@`localhost` PROCEDURE `update_Streaming`(
+IN w_idStreaming int(11),
+IN w_name varchar(45),
+IN w_duration varchar(45),
+IN w_commitDate date,
+IN w_views int(11),
+IN w_video mediumblob,
+IN w_idSong int(11)
+)
+BEGIN
+UPDATE streaming
+SET name=w_name,
+    duration=w_duration,
+    commitDate=w_commitDate,
+    views=w_views,
+    video=w_video,
+    idSond=w_idSong
+WHERE idStreaming=w_idStreaming;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -387,6 +537,7 @@ DELIMITER ;
 DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `update_User`(
 	IN w_idUser int(11),
+    IN w_nickname varchar(45),
     IN w_name varchar(45),
     IN w_surname varchar(45),
     IN w_birthday date,
@@ -397,13 +548,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `update_User`(
     'Espectador','Tienda de música'),
     IN w_idPassword int(11),
     IN w_idFriend int(11),
-    IN w_idStreaming int(11)
+    IN w_idStreaming int(11),
+    IN w_ProfilePicture tinyblob
     
 )
 BEGIN
 
 	UPDATE user 
     SET	name = w_name,
+		nickname = w_nickname,
 		surname = w_surname,
 		birthday = w_birthday,
 		registerDate = w_registerDate,
@@ -411,7 +564,8 @@ BEGIN
 		category = w_category,
 		idPassword =w_idPassword,
 		idFriend = w_idFriend,
-		idStreaming = w_idStreaming
+		idStreaming = w_idStreaming,
+        ProfilePicture = w_ProfilePicture
 	WHERE idUser = w_idUser;
     
 END ;;
@@ -430,4 +584,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-21 19:02:53
+-- Dump completed on 2018-10-27 16:19:46
