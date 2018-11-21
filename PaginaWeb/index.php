@@ -1,13 +1,6 @@
-<?php
-session_start();
 
-require_once("php/gestionBD.php");
-$conexion=CrearConexionBD();
-if(isset($_SESSION["username"])) {
-  $username=$_SESSION["username"];
-} else {
-  $username=null;
-}
+<?php
+
 
 ?>
 <!DOCTYPE html>
@@ -33,18 +26,43 @@ if(isset($_SESSION["username"])) {
 <body id="top">
       <div class="wrapper"> 
         <!-- ####################################CABECERA-CUERPO-PAGINA########################################## -->
-            
+           <?php
+            require_once("html/portada.html");
+            ?>
+
         
 
         <!-- ####################################BARRA-SUPERIOR-CUERPO-PAGINA########################################## -->
-          
+           <div id="topbar">
+                  <?php
+                  require_once("html/menunavegacion.html");
+                  ?>
+                  <br class="clear" />
+            </div>
         <!-- ####################################################################################################### -->
                                           <!-- CONTENEDOR -->
         <!-- ####################################################################################################### -->
+            <div id="container" style="margin:auto;">
+                  <div id="content">
+
+                  <!-- ACTUALIZADOR DE CONTENIDO --> 
+
+                    <?php 
+                    require_once($_SESSION["pagina"]);
+                    ?>
+                      
+            </div>
        </div>
             
 <!-- PIE DE PAGINA -->
 
       </body>
-            
+<div id="footer">                
+      <div id="copyright">
+          <div>
+              <p class="fl_left" style="margin-top: 30px;">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Domain Name</a></p>
+              <br class="clear" />
+          </div>
+      </div>
+</div> 
 </html>
